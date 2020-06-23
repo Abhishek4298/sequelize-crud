@@ -67,17 +67,33 @@ exports.remove = async function (req, res) {
 
 exports.update = async function (req, res) {
 	try {
+		const { id } = req.params;
 
-		const up = await db.masters.update(
+		await db.masters.update(
 			{ desciption: req.body.desciption },
 			{
 				where: {
-					id: req.params.id,
+					id
 				},
 			}
 		);
+		const response = await db.masters.findAll(
+			{
+				where: {
+					id
+				},
+				include: [
+					{
+						model: db.masterProducts,
+					},
+					{
+						model: db.masterSpecialities,
+					}
+				],
+			}
+		)
 		console.log("update done successfully");
-		return successResponse(req, res, { up });
+		return successResponse(req, res, { response });
 	} catch (error) {
 		return errorResponse(req, res, error.message);
 	}
