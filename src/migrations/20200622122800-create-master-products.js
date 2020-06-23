@@ -15,7 +15,7 @@ module.exports = {
           model: "masters",
           key: "id",
         },
-        onDelete: "restrict",
+        onDelete: "CASCADE",
         onUpdate: "CASCADE",
       },
 			createdAt: {

@@ -35,22 +35,22 @@ exports.insert = async function (req, res) {
 		);
 	}
 };
-
 exports.remove = async function (req, res) {
-	try {
-		const rem = await db.masters.destroy({
+	const { id } = req.params;
+	const rem = await db.masters.destroy(
+		{
 			where: {
-				id: req.params.id,
-			},
-		});
-		return successResponse(req, res, { rem });
-	} catch (error) {
-		return errorResponse(req, res, error.message);
-	}
-};
+				id
+			}
+		}
+	);
+	return successResponse(req, res, { rem });
 
+};
 exports.update = async function (req, res) {
 	try {
+		const { id } = req.params;
+
 		const up = await db.masters.update(
 			{ desciption: req.body.desciption },
 			{

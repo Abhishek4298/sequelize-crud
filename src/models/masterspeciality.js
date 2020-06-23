@@ -11,6 +11,8 @@ module.exports = (sequelize, DataTypes) => {
 				model: "masters",
 				key: "id",
 			},
+			onDelete: 'CASCADE',
+			onUpdate: 'CASCADE',
 		}
 	}, {});
 	masterSpeciality.associate = function (models) {
