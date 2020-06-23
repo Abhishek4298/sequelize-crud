@@ -35,21 +35,38 @@ exports.insert = async function (req, res) {
 		);
 	}
 };
+
 exports.remove = async function (req, res) {
+
 	const { id } = req.params;
-	const rem = await db.masters.destroy(
+
+	const response = await db.masters.findAll(
+		{
+			where: {
+				id
+			},
+			include: [
+				{
+					model: db.masterProducts,
+				},
+				{
+					model: db.masterSpecialities,
+				}
+			],
+		}
+	)
+	await db.masters.destroy(
 		{
 			where: {
 				id
 			}
 		}
 	);
-	return successResponse(req, res, { rem });
-
+	return successResponse(req, res, { response });
 };
+
 exports.update = async function (req, res) {
 	try {
-		const { id } = req.params;
 
 		const up = await db.masters.update(
 			{ desciption: req.body.desciption },
